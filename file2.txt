@@ -1,2 +1,2 @@
-my second file
+my second file. add something
 file 2
