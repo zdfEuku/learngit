@@ -67,5 +67,4 @@ git push -u origin master
 
 第四部：以后再推送
 只要本地作了提交，就可以通过命令
-git push origin masters
-经验证， 直接 git push 就可以
+git push 
