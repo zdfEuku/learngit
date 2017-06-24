@@ -72,3 +72,8 @@ git push
 【17】从远程库克隆
 git clone
 如：  git clone git@github.com:zdfEuku/triangleIndicate.git
+
+【18】分支管理
+【19】 git branch 查看分支  。 当前分支会标上 *
+【20】 创建分支  git branch 分支名
+【21】 切换到某个分支   git checkout 分支名
