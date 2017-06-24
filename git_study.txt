@@ -68,3 +68,7 @@ git push -u origin master
 第四部：以后再推送
 只要本地作了提交，就可以通过命令
 git push 
+
+【17】从远程库克隆
+git clone
+如：  git clone git@github.com:zdfEuku/triangleIndicate.git
