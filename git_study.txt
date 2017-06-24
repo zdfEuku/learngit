@@ -75,6 +75,7 @@ git config --global user.email "<2240493958@qq.com>"
 	当前分支会标上 *
 【20】 创建分支：  git branch <分支名>
 【21】 切换到某个分支：   git checkout <分支名>
+【21.1】创建并切换到一个新分支：  git checkout -b <分支名>
 【22】 合并分支：   git merge <分支名>
 	把指定分支合并到当前分支
 【23】删除分支：  git branch -d <分支名>
