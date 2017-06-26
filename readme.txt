@@ -3,7 +3,8 @@ add a line.
 my third line
 my forth line.
 my fifth line。
-人员2 的 dev3
+人员2 的 dev3.
+主开发者添加了一行 dev3
 -------------------------
 git@github.com:zdfEuku/learngit.git
 
