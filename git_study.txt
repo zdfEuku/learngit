@@ -102,9 +102,13 @@ git config --global user.email "<2240493958@qq.com>"
 【31】多人协作
 【31.1】查看远程库的信息：  git remote
 【31.2】查看远程库的详细信息：  git remote -v
-【31.3】推送分支  git push <远程库的分支> <本地的分支>  。  例如  git push origin master
+【31.3】推送分支  git push <远程库> <分支名>  。  例如  git push origin master
 【31.4】 策略
 		master分支是主分支，因此要时刻与远程同步；
 		dev分支是开发分支，团队所有成员都需要在上面工作，所以也需要与远程同步；
 		bug分支只用于在本地修复bug，就没必要推到远程了，除非老板要看看你每周到底修复了几个bug；
 		feature分支是否推到远程，取决于你是否和你的小伙伴合作在上面开发。
+【32】 你的小伙伴从远程库clone时，默认情况下，你的小伙伴只能看到本地的master分支。
+【32.1】 从远程库clone指定分支，这里有问题没通过：   git checkout -b dev origin/dev
+
+【33】 抓取：  git pull
