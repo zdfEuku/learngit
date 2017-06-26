@@ -108,7 +108,9 @@ git config --global user.email "<2240493958@qq.com>"
 		dev分支是开发分支，团队所有成员都需要在上面工作，所以也需要与远程同步；
 		bug分支只用于在本地修复bug，就没必要推到远程了，除非老板要看看你每周到底修复了几个bug；
 		feature分支是否推到远程，取决于你是否和你的小伙伴合作在上面开发。
-【32】 你的小伙伴从远程库clone时，默认情况下，你的小伙伴只能看到本地的master分支。
-【32.1】 从远程库clone指定分支，这里有问题没通过：   git checkout -b dev origin/dev
+
 
 【33】 抓取：  git pull
+【34】 你的小伙伴从远程库clone时，默认情况下，你的小伙伴只能看到本地的master分支。
+【32.1】 抓取分支：   git checkout -b <分支名> origin/<分支名>  。  例如 git checkout -b <dev3> origin/<dev3>
+	前提： 首先要 git pull,   然后再 commit并且 push master分支。 之后才能抓取指定分支
