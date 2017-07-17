@@ -1,0 +1,146 @@
+给文件头部加上：
+<#ftl output_format="HTML">
+那么freemarker会自动html转义
+
+${value?no_esc}  阻止自动转义
+----------------------------------------
+数据类型：
+1、字符串， 双引号括起来
+2、数字：  只有浮点数   3/2 = 1.5 而不会等于1
+3、bool型：  true, false
+4、日期型
+强类型
+
+--------------------
+容器Containers,  包括： hash, sequence 和 collection
+容器里面的值不可变
+
+区分大小写
+
+--------------------------------------------
+宏
+<# macro mydirective/>
+<@mydirective parameters>...</@mydirective>
+
+--------------------------------------------
+range:   如 <#assign ary2 = 0..20/>  从 0 到 20 共21个数字
+		start..*length  
+注意： 没有中括号
+
+字符串截取：
+	<#assign s = "ABCDEF">
+	{s[2..3]}  输出： CD
+--------------------------------------------
+built-ins
+一般来说，如果没有参数，则不可带()
+如
+${testString?html}
+${testString?upper_case?html}
+${testSequence?size}
+${testSequence?join(", ")}
+----------------------
+! 指定默认值
+??  判断是否存在
+---------------------------------------------
+<#nested>指令
+	<@border>The bordered text</@border>
+	border宏中：   <#nested>
+---------------------------------------------
+freemarker不允许在template中修改后台传过来的 data-model
+如果模板中定义的变量和data-model中定义的相同，那么模板中定义的会 hide （而不是 overwrite） data-model中的变量
+	此时，仍然可以通过 ${.globals.val} 访问到这个 data-model变量
+----------------------------------------------
+freemarker变量作用域：
+一、 data-model中的变量， 
+二、普通变量  <#assign>指令创建或修改。 对<#include>进来的ftl文件仍然可见
+三、local变量： macro体(或者function体,下同)中的变量  <#local>指令创建或修改。 本宏 调用的宏 中不可见
+	macro的参数也是 local变量
+	它能 hide（不是overwrite）同名的 普通变量
+四、loop变量  <#list seq1 as x>中的x. 不可修改。 其中调用的宏 不可见
+	它能 hide 同名的 普通变量 和 local变量
+	内loop变量会hide(不是overwrite)外loop变量
+-----------------------------------------------
+命名空间 namespace
+	<#import "/lib/example.ftl" as util>
+	Some Web page...
+	<@util.copyright date="1999-2002"/>
+	这样，被导入的文件就不会破坏宿主的普通变量
+	再次提醒，data-model变量全局可见。
+-----------------------------------------------
+转义：
+<#ftl output_format="HTML">  名字有  HTML, XML, JavaScript, JSON, plainText等。  
+默认 JavaScript, JSON, plainText不转义
+	HTML 和 XML  对 <>"'& 五个符号转义
+---------------
+对文件的一部分指定转义方式：
+<#outputformat "XML">
+  ${"'"}  <#-- Prints: &apos; -->
+</#outputformat>
+--------------
+?no_esc 不转义
+<#noautoesc>
+	对中间的内容都不转义
+</#noautoesc>
+
+<#ftl autoesc=false>  指定对整个文件 不转义
+<#autoesc>
+  对中间的内容必须转义， 不管 <#ftl autoesc=false> 指令
+</#autoesc>
+?esc 必须转义
+<#assign markupOutput1="<b>Test</b>"?no_esc> 这样，以后输出此变量时就不再转义了
+<#assign captured>captured的值</#assign>     这样，以后输出此变量时就不再转义了
+----------------------------------
+${}插值中， string之外的类型可以自动转换成string
+	bool类型转换成   true  false
+	datetime不能，
+	--------------------
+	输出日期型数据
+	${dateVal?datetime}
+	${dateVal?date}
+	${dateVal?time}
+	${dateVal?string("yyyy-MM-dd HH:mm:ss")}
+---------------------------------------------------------------------------------------------
+处理字符串的built-ins
+contains   例如：  <#if "piceous"?contains("ice")>
+ends_with  
+ensure_ends_with
+ensure_starts_with	
+index_of
+last_index_of
+length
+matches：  判断是否匹配正则表达式   
+replace：  只替换子文本，不处理正则
+split
+trim
+url：  进行url编码， 即all non-US-ASCII and reserved URL characters will be escaped with %XX。  /, =, &  等都是url保留字；  但单引号不是
+	例如  <a href="foo.cgi?x=${x?url}&y=${y?url}">Click here...</a>
+	<#setting url_escaping_charset="UTF-8">  可以如此设定 url编码用到的字符集
+---------------------------------------------------------------------------------------------
+处理数字的built-ins
+abs
+round, floor, ceiling
+string 
+	例如： ${x?string.number}
+		${x?string.currency}
+		${x?string.percent}
+		${x?string["0.##"]}  //小数部分的0和#都指定了最多几位小数。但如果不够，0会在后面加0； #不加
+---------------------------------------------------------------------------------------------
+输出日期型数据
+	${dateVal?datetime}
+	${dateVal?date}
+	${dateVal?time}
+	${dateVal?string("yyyy-MM-dd HH:mm:ss")}
+----------------------------------------------------------------------------------------------
+bool型的built-ins
+foo?string("yes", "no")
+----------------------------------------------------------------------------------------------
+sequence型的built-ins
+chunk
+	<#list seq?chunk(4, "\xA0)") as row>  不足4个的用空格&nbsp;补齐
+join
+seq_contains
+seq_index_of
+size
+sort   升序排序
+reverse
+sort_by  对hash的序列，按指定属性进行排序
