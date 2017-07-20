@@ -1,4 +1,4 @@
-给文件头部加上：
+﻿给文件头部加上：
 <#ftl output_format="HTML">
 那么freemarker会自动html转义
 
@@ -16,6 +16,21 @@ ${value?no_esc}  阻止自动转义
 容器里面的值不可变
 
 区分大小写
+--------------------------------------------
+函数（built-ins）
+以 ? 开头
+?length : 字符串的长度
+?size: 返回sequence的项目数
+（bool值）?string("真时的字符串", "假时的字符串")
+sequenceVal?join(", "): 把序列拼接成字符串
+函数可以链式使用，如： sequenceVal?join(", ")?upper_case
+---------------------------------------------
+默认值
+null和未定义的值等同
+!defaultValue,   比如：${name!”张三”}
+
+?? 是否存在这个值 （空字符串、0都是存在的。  java的null是不存在）
+(animals.python.price)!0    (animals.python.price)??  这样写，即便三层变量都不存在也没关系。
 
 --------------------------------------------
 宏
