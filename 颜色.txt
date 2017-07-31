@@ -1,0 +1,11 @@
+【1】rgb颜色模式：
+互补色：  red 和 cyan是互补色;   magenta和green;   blue 和 yellow
+【2】CMYK颜色模式
+一种印刷模式
+cyan青， magenta洋红，yellow黄, black黑
+【3】Lab颜色模式
+Luminance流明（亮度），
+【3】HSB颜色模式
+hue色调([0=< hue < 360])，saturation饱和度(0 <= s <= 100%)， brightness亮度(0 =< b <= 100%)
+【4】灰度模式
+灰度图像的每个像素有一个0（黑色）到255（白色）之间的亮度值
