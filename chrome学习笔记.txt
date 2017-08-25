@@ -1,0 +1,41 @@
+Performance:
+【1】
+	以 无痕模式 （Incognito Mode）打开网页
+	ctrl + shift + P 组合键，调出更多功能面板
+【2】网站性能目标：
+立即响应用户；在 100 毫秒以内确认用户输入。
+设置动画或滚动时，在 10 毫秒以内生成帧。
+最大程度增加主线程的空闲时间。
+持续吸引用户；在 1000 毫秒以内呈现交互内容。
+【3】优化js执行：
+对于动画效果的实现，避免使用 setTimeout 或 setInterval，请使用 requestAnimationFrame。（不要使用 jQuery 的 animate）
+(function() {
+    var lastTime = 0;
+    var vendors = ['webkit', 'moz'];
+    for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+        window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
+        window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] ||    // Webkit中此取消方法的名字变了
+                                      window[vendors[x] + 'CancelRequestAnimationFrame'];
+    }
+
+    if (!window.requestAnimationFrame) {
+        window.requestAnimationFrame = function(callback, element) {
+            var currTime = new Date().getTime();
+            var timeToCall = Math.max(0, 16.7 - (currTime - lastTime));
+            var id = window.setTimeout(function() {
+                callback(currTime + timeToCall);
+            }, timeToCall);
+            lastTime = currTime + timeToCall;
+            return id;
+        };
+    }
+    if (!window.cancelAnimationFrame) {
+        window.cancelAnimationFrame = function(id) {
+            clearTimeout(id);
+        };
+    }
+}());
+将长时间运行的 JavaScript 从主线程移到 Web Worker。
+	例如，如果在滚动之类的动画中，最好是想办法使 JavaScript 保持在 3-4 毫秒的范围内。超过此范围，就可能要占用太多时间(10ms之内)。如果在空闲期间，则可以不必那么斤斤计较所占的时间。
+使用微任务来执行对多个帧的 DOM 更改。
+使用 Chrome DevTools 的 Timeline 和 JavaScript 分析器来评估 JavaScript 的影响。
